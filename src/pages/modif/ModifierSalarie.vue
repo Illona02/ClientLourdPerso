@@ -43,20 +43,28 @@
         :rules="[(val) => (val && val.length > 0) || error]"
       />
       <q-select
-        name="site"
+        name="ville"
         filled
-        v-model="site"
-        :options="options"
+        v-model="ville"
+        :options="options_sites"
+        emit-value
+        map-options
+        option-value="id"
+        option-label="ville"
         label="Site du salarié"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || error]"
       />
 
       <q-select
-        name="service"
+        name="fonction"
         filled
-        v-model="service"
-        :options="options"
+        v-model="fonction"
+        :options="options_services"
+        emit-value
+        map-options
+        option-value="id"
+        option-label="fonction"
         label="Service du salarié"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || error]"
@@ -83,11 +91,18 @@ export default {
     const route = useRoute();
     const selectedId = route.query.selectedId;
     const dataApi = ref();
+    const dataApiService = ref();
+    const dataApiSite = ref();
+
+    const options_services = dataApiService;
+    const options_sites = dataApiSite;
 
     onMounted(() => {
       if (selectedId) {
         loadData(selectedId);
       }
+      loadDataService();
+      loadDataSite();
     });
 
     function loadData() {
@@ -102,8 +117,32 @@ export default {
           telephone_fixe.value = dataApi.value.telephone_fixe;
           telephone_portable.value = dataApi.value.telephone_portable;
           email.value = dataApi.value.email;
-          service.value = dataApi.value.service;
-          site.value = dataApi.value.site;
+          fonction.value = dataApi.value.service_id;
+          ville.value = dataApi.value.site_id;
+        })
+        .catch(() => {
+          alert('erreur');
+        });
+    }
+
+    function loadDataService() {
+      api
+        .get('/services')
+        .then((response) => {
+          dataApiService.value = response.data;
+          console.log(dataApiService);
+        })
+        .catch(() => {
+          alert('erreur');
+        });
+    }
+
+    function loadDataSite() {
+      api
+        .get('/site')
+        .then((response) => {
+          dataApiSite.value = response.data;
+          console.log(dataApiSite);
         })
         .catch(() => {
           alert('erreur');
@@ -116,11 +155,10 @@ export default {
     const telephone_portable = ref(null);
     const email = ref(null);
 
-    const service = ref(null);
-    const site = ref(null);
+    const fonction = ref(null);
+    const ville = ref(null);
 
     const error = 'Veuillez remplir ce champ';
-    const options = ['Paris'];
 
     return {
       nom,
@@ -128,9 +166,10 @@ export default {
       telephone_fixe,
       telephone_portable,
       email,
-      site,
-      service,
-      options,
+      ville,
+      fonction,
+      options_services,
+      options_sites,
       error,
 
       Modifier() {

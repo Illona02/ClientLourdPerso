@@ -46,7 +46,11 @@
         name="site"
         filled
         v-model="site"
-        :options="options"
+        :options="options_sites"
+        emit-value
+        map-options
+        option-value="id"
+        option-label="ville"
         label="Site du salarié"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || error]"
@@ -56,7 +60,11 @@
         name="service"
         filled
         v-model="service"
-        :options="options"
+        :options="options_services"
+        emit-value
+        map-options
+        option-value="id"
+        option-label="fonction"
         label="Service du salarié"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || error]"
@@ -87,7 +95,8 @@ export default {
     const site = ref(null);
 
     const error = 'Veuillez remplir ce champ';
-    const options = [dataApiService.value];
+    const options_services = dataApiService;
+    const options_sites = dataApiSite;
 
     onMounted(() => {
       loadDataService();
@@ -126,7 +135,8 @@ export default {
       email,
       site,
       service,
-      options,
+      options_services,
+      options_sites,
       error,
 
       Ajouter() {
@@ -134,9 +144,15 @@ export default {
           .put('/salaries', {
             nom: nom.value,
             prenom: prenom.value,
+            telephoneFixe: telephone_fixe.value,
             telephone_fixe: telephone_fixe.value,
+            telephonePortable: telephone_portable.value,
             telephone_portable: telephone_portable.value,
             email: email.value,
+            site_id: site.value,
+            service_id: service.value,
+            fkService: service.value,
+            fkSite: site.value,
           })
           .then((response) => {
             console.log("Réponse de l'API :", response.data);

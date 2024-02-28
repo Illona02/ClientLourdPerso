@@ -77,6 +77,17 @@ export const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    name: 'SupprimerSite',
+    path: '/SupprimerSite',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('pages/supp/SupprimerSite.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

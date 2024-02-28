@@ -15,6 +15,7 @@
             emit-value
             map-options
             option-value="id"
+            option-label="ville"
             label="Recherche par site"
           />
 
@@ -24,6 +25,7 @@
             emit-value
             map-options
             option-value="id"
+            option-label="fonction"
             label="Recherche par service"
           />
           <br />
@@ -53,8 +55,12 @@ import { api } from 'boot/axios';
 
 onMounted(() => {
   loadData();
+  loadDataService();
+  loadDataSite();
 });
 
+const dataApiService = ref();
+const dataApiSite = ref();
 const rechercheSalaries = ref('');
 const selectedSite = ref([]);
 const selectedService = ref([]);
@@ -78,6 +84,30 @@ async function loadData() {
   }
 }
 
+function loadDataService() {
+  api
+    .get('/services')
+    .then((response) => {
+      dataApiService.value = response.data;
+      console.log(dataApiService);
+    })
+    .catch(() => {
+      alert('erreur');
+    });
+}
+
+function loadDataSite() {
+  api
+    .get('/site')
+    .then((response) => {
+      dataApiSite.value = response.data;
+      console.log(dataApiSite);
+    })
+    .catch(() => {
+      alert('erreur');
+    });
+}
+
 watch(rechercheSalaries, () => {
   loadData();
 });
@@ -97,23 +127,8 @@ const pagination = {
   rowsPerPage: 10,
 };
 
-const options_services = [
-  { id: 1, label: 'Comptabilité' },
-  { id: 2, label: 'Production' },
-  { id: 3, label: 'Accueil' },
-  { id: 4, label: 'Informatique' },
-  { id: 5, label: 'Commercial' },
-  { id: 6, label: 'Transport' },
-  { id: 7, label: 'Juridique' },
-];
-
-const options_sites = [
-  { id: 1, label: 'Paris' },
-  { id: 2, label: 'Nantes' },
-  { id: 3, label: 'Toulouse' },
-  { id: 4, label: 'Nice' },
-  { id: 5, label: 'Lille' },
-];
+const options_services = dataApiService;
+const options_sites = dataApiSite;
 
 const columns = [
   {
@@ -194,8 +209,8 @@ const rows = computed(() => {
 */
 
 function Reinitialiser() {
-  selectedService.value = '';
-  selectedSite.value = '';
+  selectedService.value = null;
+  selectedSite.value = null;
   rechercheSalaries.value = '';
   selectedNom.value = '';
 }

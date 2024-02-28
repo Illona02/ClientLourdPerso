@@ -3,7 +3,7 @@
     <h5>Ajouter un nouveau service</h5>
     <q-form class="q-gutter-md">
       <q-input
-        name="nomService"
+        name="fonction"
         filled
         v-model="service"
         label="Nouveau service"
@@ -22,6 +22,7 @@
 
 <script>
 import { ref } from 'vue';
+import { api } from 'boot/axios';
 
 export default {
   setup() {
@@ -34,8 +35,8 @@ export default {
 
       Ajouter() {
         api
-          .put('/site', {
-            ville: site.value,
+          .put('/services', {
+            fonction: service.value,
           })
           .then((response) => {
             console.log("Réponse de l'API :", response.data);

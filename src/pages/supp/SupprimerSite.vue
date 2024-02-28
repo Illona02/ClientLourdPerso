@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md" style="max-width: 50%">
-    <h5>Supprimer un service</h5>
+    <h5>Supprimer un site</h5>
     <q-form class="q-gutter-md">
       <q-input
         name="ville"
@@ -51,14 +51,14 @@ export default {
     }
 
     return {
-      fonction,
+      ville,
       error,
 
       Supprimer() {
         api
           .delete('/site/' + selectedId)
           .then(() => {
-            alert('Site modifié avec succès');
+            alert('Site supprimé avec succès');
           })
           .catch(() => {
             alert('erreur');

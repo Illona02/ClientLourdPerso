@@ -14,7 +14,7 @@
             emit-value
             map-options
             option-value="id"
-            option-label="label"
+            option-label="ville"
             label="Recherche par site"
           />
 
@@ -24,7 +24,7 @@
             emit-value
             map-options
             option-value="id"
-            option-label="label"
+            option-label="fonction"
             label="Recherche par service"
           />
           <br />
@@ -289,6 +289,17 @@ const SuppService = () => {
   }
 };
 
+const SuppSite = () => {
+  if (selectedSite.value.length > 0) {
+    selectedId.value = selectedSite.value[0].id;
+    router.push({
+      path: '/SupprimerSite',
+      query: { selectedId: selectedId.value },
+    });
+  } else {
+    console.log('Aucun élément sélectionné');
+  }
+};
 const rechercheSalaries = ref('');
 const idService = ref(null);
 const idSite = ref(null);
@@ -297,23 +308,8 @@ const pagination = {
   rowsPerPage: 10,
 };
 
-const options_services = [
-  { id: 1, label: 'Comptabilité' },
-  { id: 2, label: 'Production' },
-  { id: 3, label: 'Accueil' },
-  { id: 4, label: 'Informatique' },
-  { id: 5, label: 'Commercial' },
-  { id: 6, label: 'Transport' },
-  { id: 7, label: 'Juridique' },
-];
-
-const options_sites = [
-  { id: 1, label: 'Paris' },
-  { id: 2, label: 'Nantes' },
-  { id: 3, label: 'Toulouse' },
-  { id: 4, label: 'Nice' },
-  { id: 5, label: 'Lille' },
-];
+const options_services = dataApiService;
+const options_sites = dataApiSite;
 
 const columns = [
   {

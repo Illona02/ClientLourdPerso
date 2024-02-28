@@ -58,7 +58,8 @@ export default {
         api
           .delete('/services/' + selectedId)
           .then(() => {
-            alert('Service modifié avec succès');
+            alert('Service supprimé avec succès');
+            console.log();
           })
           .catch(() => {
             alert('erreur');
