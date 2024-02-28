@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md" style="max-width: 50%">
     <h5>Ajouter un nouveau salarié</h5>
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+    <q-form class="q-gutter-md">
       <q-input
         name="nom"
         filled
@@ -61,20 +61,22 @@
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || error]"
       />
-
-      <div>
-        <q-btn label="Ajouter un salarié" type="submit" color="primary" />
-        <q-btn label="Réinitialiser" type="reset" flat class="q-ml-sm" />
-      </div>
     </q-form>
+    <q-btn @click="Ajouter" class="full-width q-mt-md bg-cyan-10 text-white"
+      >Ajouter le salarié</q-btn
+    >
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { api } from 'boot/axios';
 
 export default {
   setup() {
+    const dataApiService = ref();
+    const dataApiSite = ref();
+
     const nom = ref(null);
     const prenom = ref(null);
     const telephone_fixe = ref(null);
@@ -85,7 +87,36 @@ export default {
     const site = ref(null);
 
     const error = 'Veuillez remplir ce champ';
-    const options = ['Paris'];
+    const options = [dataApiService.value];
+
+    onMounted(() => {
+      loadDataService();
+      loadDataSite();
+    });
+
+    function loadDataService() {
+      api
+        .get('/services')
+        .then((response) => {
+          dataApiService.value = response.data;
+          console.log(dataApiService);
+        })
+        .catch(() => {
+          alert('erreur');
+        });
+    }
+
+    function loadDataSite() {
+      api
+        .get('/site')
+        .then((response) => {
+          dataApiSite.value = response.data;
+          console.log(dataApiSite);
+        })
+        .catch(() => {
+          alert('erreur');
+        });
+    }
 
     return {
       nom,
@@ -98,15 +129,26 @@ export default {
       options,
       error,
 
-      onSubmit() {
-        alert('Salarié ajouté');
-      },
-
-      onReset() {
-        nom.value = null;
-        prenom.value = null;
-        site.value = null;
-        service.value = null;
+      Ajouter() {
+        api
+          .put('/salaries', {
+            nom: nom.value,
+            prenom: prenom.value,
+            telephone_fixe: telephone_fixe.value,
+            telephone_portable: telephone_portable.value,
+            email: email.value,
+          })
+          .then((response) => {
+            console.log("Réponse de l'API :", response.data);
+            alert('Salarié ajouté');
+          })
+          .catch((error) => {
+            console.error(
+              "Erreur lors de l'envoi des données à l'API :",
+              error
+            );
+            // Gérez les erreurs d'envoi à l'API
+          });
       },
     };
   },
