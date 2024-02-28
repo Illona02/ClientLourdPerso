@@ -64,13 +64,7 @@
 
       <div>
         <q-btn label="Ajouter un salarié" type="submit" color="primary" />
-        <q-btn
-          label="Réinitialiser"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
+        <q-btn label="Réinitialiser" type="reset" flat class="q-ml-sm" />
       </div>
     </q-form>
   </div>

@@ -12,7 +12,9 @@
         readonly
       />
     </q-form>
-    <q-btn @click="Supprimer" color="primary">Supprimer le service</q-btn>
+    <q-btn @click="Supprimer" class="full-width q-mt-md bg-cyan-10 text-white"
+      >Supprimer le service</q-btn
+    >
   </div>
 </template>
 

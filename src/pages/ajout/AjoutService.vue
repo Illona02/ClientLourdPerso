@@ -12,7 +12,9 @@
       />
 
       <div>
-        <q-btn @click="Ajouter" color="primary">Ajouter le service</q-btn>
+        <q-btn @click="Ajouter" class="full-width q-mt-md bg-cyan-10 text-white"
+          >Ajouter le service</q-btn
+        >
       </div>
     </q-form>
   </div>

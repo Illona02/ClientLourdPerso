@@ -12,7 +12,9 @@
       />
 
       <div>
-        <q-btn @click="Ajouter" color="primary">Ajouter le salarié</q-btn>
+        <q-btn @click="Ajouter" class="full-width q-mt-md bg-cyan-10 text-white"
+          >Ajouter le salarié</q-btn
+        >
       </div>
     </q-form>
   </div>

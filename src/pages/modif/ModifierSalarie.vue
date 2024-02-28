@@ -63,7 +63,11 @@
       />
 
       <div>
-        <q-btn @click="Modifier" color="primary">Modifier le salarié</q-btn>
+        <q-btn
+          @click="Modifier"
+          class="full-width q-mt-md bg-cyan-10 text-white"
+          >Modifier le salarié</q-btn
+        >
       </div>
     </q-form>
   </div>

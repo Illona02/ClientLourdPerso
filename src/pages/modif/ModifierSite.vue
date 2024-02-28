@@ -11,7 +11,9 @@
         :rules="[(val) => (val && val.length > 0) || error]"
       />
     </q-form>
-    <q-btn @click="Modifier" color="primary">Modifier le site</q-btn>
+    <q-btn @click="Modifier" class="full-width q-mt-md bg-cyan-10 text-white"
+      >Modifier le site</q-btn
+    >
   </div>
 </template>
 
