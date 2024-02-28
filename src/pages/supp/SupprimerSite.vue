@@ -3,16 +3,16 @@
     <h5>Supprimer un service</h5>
     <q-form class="q-gutter-md">
       <q-input
-        name="fonction"
+        name="ville"
         filled
-        v-model="fonction"
-        label="Fonction"
+        v-model="ville"
+        label="Ville"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || error]"
         readonly
       />
     </q-form>
-    <q-btn @click="Supprimer" color="primary">Supprimer le service</q-btn>
+    <q-btn @click="Supprimer" color="primary">Supprimer le site</q-btn>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
   setup() {
     const route = useRoute();
     const selectedId = route.query.selectedId;
-    const fonction = ref();
+    const ville = ref();
     const dataApi = ref();
 
     onMounted(() => {
@@ -38,10 +38,10 @@ export default {
 
     function loadDataId() {
       api
-        .get('/services/{id}?id=' + selectedId)
+        .get('/site/{id}?id=' + selectedId)
         .then((response) => {
           dataApi.value = response.data;
-          fonction.value = dataApi.value.fonction;
+          ville.value = dataApi.value.ville;
         })
         .catch(() => {
           alert('erreur');
@@ -54,9 +54,9 @@ export default {
 
       Supprimer() {
         api
-          .delete('/services/' + selectedId)
+          .delete('/site/' + selectedId)
           .then(() => {
-            alert('Service modifié avec succès');
+            alert('Site modifié avec succès');
           })
           .catch(() => {
             alert('erreur');

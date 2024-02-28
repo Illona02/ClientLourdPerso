@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md" style="max-width: 400px">
     <h5>Ajouter un nouveau service</h5>
-    <q-form @submit="onSubmit" class="q-gutter-md">
+    <q-form class="q-gutter-md">
       <q-input
         name="nomService"
         filled
@@ -12,7 +12,7 @@
       />
 
       <div>
-        <q-btn label="Ajouter un service" type="submit" color="primary" />
+        <q-btn @click="Ajouter" color="primary">Ajouter le service</q-btn>
       </div>
     </q-form>
   </div>
@@ -30,8 +30,22 @@ export default {
       service,
       error,
 
-      onSubmit() {
-        alert('Service ajouté');
+      Ajouter() {
+        api
+          .put('/site', {
+            ville: site.value,
+          })
+          .then((response) => {
+            console.log("Réponse de l'API :", response.data);
+            alert('Service ajouté');
+          })
+          .catch((error) => {
+            console.error(
+              "Erreur lors de l'envoi des données à l'API :",
+              error
+            );
+            // Gérez les erreurs d'envoi à l'API
+          });
       },
     };
   },

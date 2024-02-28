@@ -1,12 +1,7 @@
 <template>
   <div class="q-pa-md" style="max-width: 400px">
     <h5>Ajouter un nouveau site</h5>
-    <q-form
-      @submit.prevent="onSubmit"
-      action="/site"
-      method="post"
-      class="q-gutter-md"
-    >
+    <q-form class="q-gutter-md">
       <q-input
         name="ville"
         filled
@@ -17,7 +12,7 @@
       />
 
       <div>
-        <q-btn label="Ajouter un site" type="submit" color="primary" />
+        <q-btn @click="Ajouter" color="primary">Ajouter le salarié</q-btn>
       </div>
     </q-form>
   </div>
@@ -36,13 +31,14 @@ export default {
       site,
       error,
 
-      onSubmit() {
+      Ajouter() {
         api
           .put('/site', {
             ville: site.value,
           })
           .then((response) => {
             console.log("Réponse de l'API :", response.data);
+            alert('Site ajouté');
           })
           .catch((error) => {
             console.error(
@@ -51,8 +47,6 @@ export default {
             );
             // Gérez les erreurs d'envoi à l'API
           });
-
-        alert('Site ajouté');
       },
     };
   },
